@@ -127,10 +127,14 @@ Imagemin.prototype._optimizeJpeg = function ( ){
  */
 
 Imagemin.prototype._optimizePng = function () {
-    var args = ['-'];
-    var pngquant = require('pngquant-bin').path;
+    var args = ['-strip', 'all', '-quiet'];
+    var optipng = require('optipng-bin').path;
 
-    return spawn(pngquant, args);
+    if (typeof this.opts.optimizationLevel === 'number') {
+        args.push('-o', this.opts.optimizationLevel);
+    }
+
+    return spawn(optipng, args);
 };
 
 /**
